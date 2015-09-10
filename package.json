@@ -22,6 +22,7 @@
   "homepage": "https://github.com/calvinmetcalf/first-n-stream#readme",
   "dependencies": {
     "inherits": "^2.0.1",
+    "once": "^1.3.2",
     "readable-stream": "^2.0.2"
   },
   "devDependencies": {
