@@ -58,5 +58,7 @@ HeaderStream.prototype._flush = function (done) {
   if (this._passThroughMode) {
     return done();
   }
-  done(new Error('insuficient data'));
+  this._headStream.end(function (e) {
+    done(e);
+  });
 };

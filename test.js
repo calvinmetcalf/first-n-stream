@@ -75,3 +75,26 @@ test('works with a callback', function (t) {
   splitter.write(6);
   splitter.end();
 });
+test('works with a callback and less then the number', function (t) {
+  t.plan(3);
+  function first2(err, resp) {
+    t.notOk(err, 'no error');
+    t.deepEquals(resp, [1, 2], 'got first two');
+  }
+  var next3 = new Transform({
+    objectMode: true,
+    transform: function (chunk, _, next) {
+      t.ok(false, 'should not be called');
+      next();
+    },
+    flush: function (next) {
+      t.ok(true, 'flush');
+      next();
+    }
+  });
+  var splitter = new FirstN(3, first2);
+  splitter.pipe(next3);
+  splitter.write(1);
+  splitter.write(2);
+  splitter.end();
+});
